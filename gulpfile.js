@@ -10,7 +10,7 @@ const jsSource = "src/**/*.js";
 
 gulp.task('default', ["watch"]);
 
-gulp.task("watch", ["browser-sync"], () => {
+gulp.task("watch", ["jshint", "browser-sync"], () => {
   gulp.watch(jsSource, ["scripts"]).on("change", browserSync.reload);
   gulp.watch("*.html").on("change", browserSync.reload);
 });
@@ -24,14 +24,14 @@ gulp.task("scripts", () => {
     .pipe(gulp.dest("build/"));
 });
 
+gulp.task("jshint", () => {
+  return gulp.src(jsSource)
+  .pipe(jshint())
+  .pipe(jshint.reporter("jshint-stylish"));
+});
+
 gulp.task("browser-sync", () => {
   browserSync.init({
     server: {baseDir: "./"}
   });
 });
-
-// gulp.task("jshint", () => {
-//   return gulp.src(jsSource)
-//     .pipe(jshint())
-//     .pipe(jshint.reporter("jshint-stylish"));
-// });
