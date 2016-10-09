@@ -6,12 +6,12 @@ myApp.controller("myController", function($scope) {
   var employees = [
     {
       firstName: "Joe",
-      lastName: "Groening",
+      lastName: "BANANAAAAA",
       gender: "Male",
       skills: [
         {skill: "writing"},
-        {skill: "dancing"},
-        {skill: "eating" }
+        {skill: "trapeze"},
+        {skill: "RUNRUNRUNAWAAAAY" }
       ]
     },
     {

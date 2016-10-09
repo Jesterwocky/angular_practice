@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title></title>
     <script src="./bower_components/angular/angular.min.js"></script>
-    <script type-"text/javascript" src="./src/app.js"></script>
     <script src="./bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="./build/app.min.js"></script>
     <link rel="stylesheet" type="text/css" ref="bower_components/bootstrap/dist/css/bootstrap.css">
   </head>
   <body>
@@ -20,12 +20,19 @@
         {{message}}
       </p>
       <h2>Employees</h2>
+      <div ng-repeat"employee in employees">
+        {{employee.firstName}} {{employee.lastName}}
+        <ul>
+
+        </ul>
+
+      </div>
       <ul ng-repeat="employee in employees">
         <li>{{employee.firstName}} {{employee.lastName}}</li>
         <li>{{employee.gender}}</li>
-        <li>Skills</li>
+        <li>SKEEEELZ</li>
           <ul>
-            <li ng-repeat="skill in employee.skills">{{skill.skill}}</li>
+            <li ng-repeat="skill in employee.skills">{{$index}} {{skill.skill}}</li>
           </ul>
       </ul>
     </div>

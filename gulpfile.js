@@ -1,15 +1,37 @@
-var gulp = require('gulp');
-var jshint = require("gulp-jshint");
+const gulp        = require('gulp'),
+      jshint      = require('gulp-jshint'),
+      babel       = require('gulp-babel'),
+      sourcemaps  = require('gulp-sourcemaps'),
+      concat      = require('gulp-concat'),
+      uglify      = require('gulp-uglify'),
+      browserSync = require('browser-sync');
 
-var config = { js: "js/**/*.js" };
+const jsSource = "src/**/*.js";
 
-gulp.task('default', function() {
-  // place code for your default task here
+gulp.task('default', ["watch"]);
+
+gulp.task("watch", ["browser-sync"], () => {
+  gulp.watch(jsSource, ["scripts"]).on("change", browserSync.reload);
+  gulp.watch("*.html").on("change", browserSync.reload);
 });
 
-gulp.task("vet", function() {
-  return gulp.src([config.js])
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'), {verbose: true})
-    .pipe(jshint.reporter('fail'));
+gulp.task("scripts", () => {
+  gulp.src(jsSource)
+    .pipe(sourcemaps.init())
+    .pipe(babel({ presets: ["es2015"] }))
+    .pipe(concat("app.min.js"))
+    .pipe(uglify({ mangle: false }))
+    .pipe(gulp.dest("build/"));
 });
+
+gulp.task("browser-sync", () => {
+  browserSync.init({
+    server: {baseDir: "./"}
+  });
+});
+
+// gulp.task("jshint", () => {
+//   return gulp.src(jsSource)
+//     .pipe(jshint())
+//     .pipe(jshint.reporter("jshint-stylish"));
+// });
