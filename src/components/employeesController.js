@@ -3,7 +3,7 @@ myApp.controller("employeesController", function($scope, makePageService) {
   $scope.thing = "HI THERE";
   $scope.message = "Hello";
 
-  var employees = [
+  let employees = [
     {
       firstName: "Joe",
       lastName: "Golightly",
@@ -47,7 +47,8 @@ myApp.controller("employeesController", function($scope, makePageService) {
 
   let currentPage = 1;
   let elementsPerPage = 2;
-  let totalPages = employees / elementsPerPage;
+  let totalPages = Math.ceil(employees.length / elementsPerPage);
+  console.log(totalPages);
 
   $scope.pageEmployees = makePageService.elementsOnPage(employees, elementsPerPage, currentPage);
 
@@ -56,4 +57,39 @@ myApp.controller("employeesController", function($scope, makePageService) {
     $scope.pageEmployees = makePageService.elementsOnPage(employees, elementsPerPage, currentPage);
   };
 
+  let pages = [];
+  for (let i = 0; i < totalPages; i ++) {
+    pages.push(makePageService.elementsOnPage(employees, elementsPerPage, i + 1));
+  }
+
+  let maxPageButtons = totalPages <= 8 ? totalPages : 8;
+
+  // pull this out
+
+  const range = function(start, stop) {
+    let rangeNums = [];
+    for (let i = start; i < stop; i ++) {
+      rangeNums.push(i);
+    }
+    return rangeNums;
+  };
+
+  let buttonInfo = [];
+  if (currentPage <= 5 || totalPages <= 8) {
+    buttonInfo = range(1, 9).slice(0, totalPages);
+    if (totalPages > 8) buttonInfo[7] = "..." ;
+  }
+  else {
+    buttonInfo = range(currentPage - 4, Math.min(currentPage + 3, totalPages));
+    if (totalPages > currentPage + 3) buttonInfo[7] = "...";
+  }
+
+  $scope.buttonInfo = buttonInfo;
+
+  $scope.pageOfEmployees = pages[currentPage - 1];
+
+  $scope.changePage2 = function(pageNumber) {
+    currentPage = pageNumber;
+    $scope.pageOfEmployees = pages[currentPage - 1];
+  };
 });
