@@ -14,27 +14,23 @@
     <p>
       {{2 + 2}}
     </p>
-    <div ng-controller="myController">
+    <div ng-controller="employeesController">
       <p>
         {{thing}}
         {{message}}
       </p>
-      <h2>Employees</h2>
-      <div ng-repeat"employee in employees">
-        {{employee.firstName}} {{employee.lastName}}
-        <ul>
-
-        </ul>
-
-      </div>
-      <ul ng-repeat="employee in employees">
+      <h2>Page Employees</h2>
+      <ul ng-repeat="employee in pageEmployees">
         <li>{{employee.firstName}} {{employee.lastName}}</li>
         <li>{{employee.gender}}</li>
-        <li>SKEEEELZ</li>
+        <li>Skills</li>
           <ul>
             <li ng-repeat="skill in employee.skills">{{$index}} {{skill.skill}}</li>
           </ul>
       </ul>
+      <input type="button" ng-click="changePage(1)" value="1">
+      <input type="button" ng-click="changePage(2)" value="2">
+      <input type="button" ng-click="changePage(3)" value="3">
     </div>
   </body>
 </html>

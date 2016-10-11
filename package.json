@@ -18,6 +18,7 @@
     "gulp-jshint": "^2.0.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^2.0.0",
-    "jshint": "^2.9.3"
+    "jshint": "^2.9.3",
+    "ng-annotate": "^1.2.1"
   }
 }
