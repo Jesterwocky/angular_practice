@@ -1,8 +1,5 @@
 //registering controllers with module myApp
 myApp.controller("employeesController", function($scope, makePageService) {
-  $scope.thing = "HI THERE";
-  $scope.message = "Hello";
-
   let employees = [
     {
       firstName: "Joe",
@@ -43,53 +40,98 @@ myApp.controller("employeesController", function($scope, makePageService) {
         {skill: "Empathy"}
       ]
     },
+    {
+      firstName: "Anne",
+      lastName: "Gregor"
+    },
+    {
+      firstName: "Brandon",
+      lastName: "Noise"
+    },
+    {
+      firstName: "Rita",
+      lastName: "Yuli"
+    },
+    {
+      firstName: "Evan",
+      lastName: "Moss"
+    },
+    {
+      firstName: "Helene",
+      lastName: "Robespierre"
+    },
+    {
+      firstName: "Mark",
+      lastName: "Hilton"
+    },
+    {
+      firstName: "Gemma",
+      lastName: "Nearfar"
+    },
+    {
+      firstName: "Joe",
+      lastName: "Balliard"
+    },
+    {
+      firstName: "Lora",
+      lastName: "Valentino"
+    },
+    {
+      firstName: "Hastings",
+      lastName: "Clark"
+    },
+    {
+      firstName: "Pauline",
+      lastName: "Noelle"
+    },
+    {
+      firstName: "Grover",
+      lastName: "Daring"
+    },
+    {
+      firstName: "Melanie",
+      lastName: "Ferris"
+    },
+    {
+      firstName: "Uther",
+      lastName: "Pendragon"
+    },
+    {
+      firstName: "Eliana",
+      lastName: "Zomg"
+    },
+    {
+      firstName: "Philadelphia",
+      lastName: "Jones"
+    },
+    {
+      firstName: "Yvonne",
+      lastName: "Dorn"
+    }
   ];
 
   let currentPage = 1;
   let elementsPerPage = 2;
-  let totalPages = Math.ceil(employees.length / elementsPerPage);
-  console.log(totalPages);
+  let pages = makePageService.allPages(employees, elementsPerPage);
 
-  $scope.pageEmployees = makePageService.elementsOnPage(employees, elementsPerPage, currentPage);
-
-  $scope.changePage = function(pageNumber) {
-    currentPage = pageNumber;
-    $scope.pageEmployees = makePageService.elementsOnPage(employees, elementsPerPage, currentPage);
-  };
-
-  let pages = [];
-  for (let i = 0; i < totalPages; i ++) {
-    pages.push(makePageService.elementsOnPage(employees, elementsPerPage, i + 1));
-  }
-
-  let maxPageButtons = totalPages <= 8 ? totalPages : 8;
-
-  // pull this out
-
-  const range = function(start, stop) {
-    let rangeNums = [];
-    for (let i = start; i < stop; i ++) {
-      rangeNums.push(i);
-    }
-    return rangeNums;
-  };
-
-  let buttonInfo = [];
-  if (currentPage <= 5 || totalPages <= 8) {
-    buttonInfo = range(1, 9).slice(0, totalPages);
-    if (totalPages > 8) buttonInfo[7] = "..." ;
-  }
-  else {
-    buttonInfo = range(currentPage - 4, Math.min(currentPage + 3, totalPages));
-    if (totalPages > currentPage + 3) buttonInfo[7] = "...";
-  }
-
+  let buttonInfo = makePageService.pageButtonRange(currentPage, pages.length);
   $scope.buttonInfo = buttonInfo;
-
   $scope.pageOfEmployees = pages[currentPage - 1];
 
-  $scope.changePage2 = function(pageNumber) {
-    currentPage = pageNumber;
-    $scope.pageOfEmployees = pages[currentPage - 1];
+  $scope.changePage = function(pageNumber, index) {
+    if (pageNumber === "...") {
+      let incrementBy = (index === 0) ? -1 : 1;
+
+      buttonInfo = makePageService.scrollPageButtonRange(
+        buttonInfo, pages.length, incrementBy
+      );
+
+      $scope.buttonInfo = buttonInfo;
+    }
+    else {
+      currentPage = pageNumber;
+      $scope.pageOfEmployees = pages[currentPage - 1];
+      $scope.buttonInfo = makePageService.pageButtonRange(currentPage, pages.length);
+    }
   };
 });

@@ -10,26 +10,20 @@
   </head>
   <body>
     <h1>{{hello}}</h1>
-    <input type="text" ng-model="hello"/>
-    <p>
-      {{2 + 2}}
-    </p>
     <div ng-controller="employeesController">
-      <p>
-        {{thing}}
-        {{message}}
-      </p>
-      <h2>Page Employees 2</h2>
-      <ul ng-repeat="employee in pageOfEmployees">
-        <li>{{employee.firstName}} {{employee.lastName}}</li>
-        <li>{{employee.gender}}</li>
-        <li>Skills</li>
+      <h2>Employees</h2>
+      <div style="height: 16em">
+        <ul ng-repeat="employee in pageOfEmployees">
+          <li>{{employee.firstName}} {{employee.lastName}}</li>
+          <li>{{employee.gender}}</li>
+          <li>Skills</li>
           <ul>
             <li ng-repeat="skill in employee.skills">{{$index}} {{skill.skill}}</li>
           </ul>
-      </ul>
-      <div ng-repeat="button in buttonInfo">
-        <input type="button" ng-click="changePage2($index + 1)" value="{{button}}">
+        </ul>
+      </div>
+      <div ng-repeat="button in buttonInfo track by $index" style="display: inline-block">
+        <input type="button" style="width: 2.3em" ng-click="changePage(button, $index)" value="{{button}}">
       </div>
     </div>
   </body>
