@@ -119,16 +119,12 @@ myApp.controller("employeesController", function($scope, pageService) {
 
   $scope.changePage = function(pageNumber, index) {
     if (pageNumber === "...") {
-      if (index === 0) {
-        $scope.buttonList = pageService.leftScrollRange(pages.length, $scope.buttonList);
-      }
-      else {
-        $scope.buttonList = pageService.rightScrollRange(pages.length, $scope.buttonList);
-      }
-
-      // scrollDirection = (index === 0) ? pageService.leftScrollRange : pageService.rightScrollRange;
-      //
-      // $scope.buttonList = scrollDirection(pages.length, $scope.buttonList);
+      let scrollAmount = (index === 0) ? -1 : 1;
+      $scope.buttonList = pageService.scrollRange(
+        pages.length,
+        $scope.buttonList,
+        scrollAmount
+      );
     }
 
     else {
@@ -137,26 +133,4 @@ myApp.controller("employeesController", function($scope, pageService) {
       $scope.buttonList = pageService.centerPageRange(pages.length, currentPage);
     }
   };
-
-
-  // let buttonList = pageService.pageButtonRange(currentPage, pages.length);
-  // $scope.buttonList = buttonList;
-  // $scope.pageOfEmployees = pages[currentPage - 1];
-
-  // $scope.changePage = function(pageNumber, index) {
-  //   if (pageNumber === "...") {
-  //     let incrementBy = (index === 0) ? -1 : 1;
-  //
-  //     buttonList = pageService.scrollPageButtonRange(
-  //       buttonList, pages.length, incrementBy
-  //     );
-  //
-  //     $scope.buttonList = buttonList;
-  //   }
-  //   else {
-  //     currentPage = pageNumber;
-  //     $scope.pageOfEmployees = pages[currentPage - 1];
-  //     $scope.buttonList = pageService.pageButtonRange(currentPage, pages.length);
-  //   }
-  // };
 });
