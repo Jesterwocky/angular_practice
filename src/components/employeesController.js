@@ -1,5 +1,5 @@
 //registering controllers with module myApp
-myApp.controller("employeesController", function($scope, makePageService) {
+myApp.controller("employeesController", function($scope, pageService) {
   let employees = [
     {
       firstName: "Joe",
@@ -112,26 +112,51 @@ myApp.controller("employeesController", function($scope, makePageService) {
 
   let currentPage = 1;
   let elementsPerPage = 2;
-  let pages = makePageService.allPages(employees, elementsPerPage);
+  let pages = pageService.allPages(employees, elementsPerPage);
 
-  let buttonInfo = makePageService.pageButtonRange(currentPage, pages.length);
-  $scope.buttonInfo = buttonInfo;
   $scope.pageOfEmployees = pages[currentPage - 1];
+  $scope.buttonList = pageService.centerPageRange(pages.length, currentPage);
 
   $scope.changePage = function(pageNumber, index) {
     if (pageNumber === "...") {
-      let incrementBy = (index === 0) ? -1 : 1;
+      if (index === 0) {
+        $scope.buttonList = pageService.leftScrollRange(pages.length, $scope.buttonList);
+      }
+      else {
+        $scope.buttonList = pageService.rightScrollRange(pages.length, $scope.buttonList);
+      }
 
-      buttonInfo = makePageService.scrollPageButtonRange(
-        buttonInfo, pages.length, incrementBy
-      );
-
-      $scope.buttonInfo = buttonInfo;
+      // scrollDirection = (index === 0) ? pageService.leftScrollRange : pageService.rightScrollRange;
+      //
+      // $scope.buttonList = scrollDirection(pages.length, $scope.buttonList);
     }
+
     else {
       currentPage = pageNumber;
       $scope.pageOfEmployees = pages[currentPage - 1];
-      $scope.buttonInfo = makePageService.pageButtonRange(currentPage, pages.length);
+      $scope.buttonList = pageService.centerPageRange(pages.length, currentPage);
     }
   };
+
+
+  // let buttonList = pageService.pageButtonRange(currentPage, pages.length);
+  // $scope.buttonList = buttonList;
+  // $scope.pageOfEmployees = pages[currentPage - 1];
+
+  // $scope.changePage = function(pageNumber, index) {
+  //   if (pageNumber === "...") {
+  //     let incrementBy = (index === 0) ? -1 : 1;
+  //
+  //     buttonList = pageService.scrollPageButtonRange(
+  //       buttonList, pages.length, incrementBy
+  //     );
+  //
+  //     $scope.buttonList = buttonList;
+  //   }
+  //   else {
+  //     currentPage = pageNumber;
+  //     $scope.pageOfEmployees = pages[currentPage - 1];
+  //     $scope.buttonList = pageService.pageButtonRange(currentPage, pages.length);
+  //   }
+  // };
 });

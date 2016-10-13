@@ -22,7 +22,7 @@
           </ul>
         </ul>
       </div>
-      <div ng-repeat="button in buttonInfo track by $index" style="display: inline-block">
+      <div ng-repeat="button in buttonList track by $index" style="display: inline-block">
         <input type="button" style="width: 2.3em" ng-click="changePage(button, $index)" value="{{button}}">
       </div>
     </div>
