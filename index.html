@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <title></title>
     <script src="./bower_components/angular/angular.min.js"></script>
-    <script src="./bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="./build/app.min.js"></script>
-    <link rel="stylesheet" type="text/css" ref="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./build/styles.css" media="screen" title="no title">
   </head>
   <body>
-    <h1>{{hello}}</h1>
     <div ng-controller="employeesController">
-      <h2>Employees</h2>
+      {{test}}
+      {{pageOfEmployees}}
+      <h2 class="blue-thing">Employees</h2>
       <div style="height: 16em">
         <ul ng-repeat="employee in pageOfEmployees">
           <li>{{employee.firstName}} {{employee.lastName}}</li>
@@ -22,8 +22,12 @@
           </ul>
         </ul>
       </div>
-      <div ng-repeat="button in buttonList track by $index" style="display: inline-block">
-        <input type="button" style="width: 2.3em" ng-click="changePage(button, $index)" value="{{button}}">
+      <div class="page-controls">
+        <input type="button" ng-click="prevPage()" value="&#9664" style="margin-right: 1em;">
+        <div ng-repeat="button in buttonList track by $index" style="display: inline-block">
+          <input type="button" style="width: 2.3em" ng-click="changePage(button, $index)" value="{{button}}">
+        </div>
+        <input type="button" ng-click="nextPage()" value="&#9654" style="margin-left: 1em;">
       </div>
     </div>
   </body>

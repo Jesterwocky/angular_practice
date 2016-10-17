@@ -113,9 +113,19 @@ myApp.controller("employeesController", function($scope, pageService) {
   let currentPage = 1;
   let elementsPerPage = 2;
   let pages = pageService.allPages(employees, elementsPerPage);
+  console.log(pages);
 
+  $scope.test = "TEST";
   $scope.pageOfEmployees = pages[currentPage - 1];
   $scope.buttonList = pageService.centerPageRange(pages.length, currentPage);
+
+  $scope.prevPage = function() {
+    if (currentPage > 1) $scope.changePage(currentPage - 1);
+  };
+
+  $scope.nextPage = function() {
+    if (currentPage < pages.length) $scope.changePage(currentPage + 1);
+  };
 
   $scope.changePage = function(pageNumber, index) {
     if (pageNumber === "...") {

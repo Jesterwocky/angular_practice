@@ -5,13 +5,17 @@ const gulp        = require('gulp'),
       concat      = require('gulp-concat'),
       uglify      = require('gulp-uglify'),
       browserSync = require('browser-sync');
+      sass        = require('gulp-sass');
+      concatCss   = require('gulp-concat-css');
 
 const jsSource = "src/**/*.js";
+const sassSource = "src/**/*.scss";
 
 gulp.task('default', ["watch"]);
 
 gulp.task("watch", ["jshint", "browser-sync"], () => {
   gulp.watch(jsSource, ["scripts"]).on("change", browserSync.reload);
+  gulp.watch(sassSource, ["sass"]).on("change", browserSync.reload);
   gulp.watch("*.html").on("change", browserSync.reload);
 });
 
@@ -24,6 +28,13 @@ gulp.task("scripts", () => {
     .pipe(gulp.dest("build/"));
 });
 
+gulp.task("sass", () => {
+  gulp.src(sassSource)
+    .pipe(sass())
+    .pipe(concatCss("styles.css"))
+    .pipe(gulp.dest("build/"));
+});
+
 gulp.task("jshint", () => {
   return gulp.src(jsSource)
   .pipe(jshint())
@@ -31,7 +42,9 @@ gulp.task("jshint", () => {
 });
 
 gulp.task("browser-sync", () => {
+  let files = [jsSource, sassSource];
   browserSync.init({
+    files,
     server: {baseDir: "./"}
   });
 });

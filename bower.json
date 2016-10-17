@@ -1,7 +1,7 @@
 {
   "name": "angular_two",
   "description": "",
-  "main": "app.js",
+  "main": "app.min.js",
   "authors": [
     "Jessie Walker <jekawacaneer@gmail.com>"
   ],
